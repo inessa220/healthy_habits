@@ -13,7 +13,7 @@ class Validator:
             raise ValidationError(
                 "Невозможно одновременно задать связанную привычку и вознаграждение!"
             )
-        if time_to_complete > 120:
+        if time_to_complete and time_to_complete.total_seconds() > 120:
             raise ValidationError("Время выполнения не должно быть больше 120 секунд!")
         if related_habit and not related_habit.sign_of_pleasant_habit:
             raise ValidationError(
@@ -23,5 +23,5 @@ class Validator:
             raise ValidationError(
                 "У приятной привычки не может быть вознаграждения или связанной привычки!"
             )
-        if periodicity > 7:
+        if periodicity is not None and periodicity > 7:
             raise ValidationError("Нельзя выполнять привычку реже, чем 1 раз в 7 дней!")

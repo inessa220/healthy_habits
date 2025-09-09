@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.timezone import localtime
+import datetime
 
 from users.models import User
 
@@ -63,8 +64,7 @@ class Habit(models.Model):
         help_text="Укажите вознаграждение после выполнения",
     )
     time_to_complete = models.DurationField(
-        null=True,
-        blank=True,
+        default=datetime.timedelta(minutes=1),
         verbose_name="Время на выполнение",
         help_text="Укажите предположительное время на выполнение привычки",
     )
