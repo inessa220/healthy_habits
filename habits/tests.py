@@ -47,25 +47,4 @@ class HabitTestCase(APITestCase):
     def test_habit_list(self):
         url = reverse("habits:habits_list")
         response = self.client.get(url)
-        data = response.json()
-        result = {
-            "count": 1,
-            "next": None,
-            "previous": None,
-            "results": [
-                {
-                    "id": self.habit.pk,
-                    "place": self.habit.place,
-                    "time": self.habit.time,
-                    "action": self.habit.action,
-                    "sign_of_pleasant_habit": self.habit.sign_of_pleasant_habit,
-                    "periodicity": self.habit.periodicity,
-                    "award": self.habit.award,
-                    "time_to_complete": self.habit.time_to_complete,
-                    "sign_of_publicity": self.habit.sign_of_publicity,
-                    "user": self.user.pk,
-                    "related_habit": self.habit.related_habit,
-                }
-            ],
-        }
         self.assertEqual(response.status_code, status.HTTP_200_OK)
