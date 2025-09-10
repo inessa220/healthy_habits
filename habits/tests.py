@@ -1,6 +1,6 @@
 from django.urls import reverse
-from rest_framework.test import APITestCase
 from rest_framework import status
+from rest_framework.test import APITestCase
 
 from habits.models import Habit
 from users.models import User
@@ -23,14 +23,11 @@ class HabitTestCase(APITestCase):
 
     def test_habit_create(self):
         url = reverse("habits:habits_create")
-        data = {
-            "action": "Иностранный язык",
-            "time_to_complete": 10
-        }
+        data = {"action": "Иностранный язык", "time_to_complete": 10}
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Habit.objects.all().count(), 2)
-        new_habit = Habit.objects.latest('pk')
+        new_habit = Habit.objects.latest("pk")
         self.assertEqual(new_habit.action, data["action"])
 
     def test_habit_update(self):

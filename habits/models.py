@@ -1,6 +1,7 @@
+import datetime
+
 from django.db import models
 from django.utils.timezone import localtime
-import datetime
 
 from users.models import User
 

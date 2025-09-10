@@ -8,3 +8,4 @@ isort==6.0.1
 pillow==11.3.0
 djangorestframework_simplejwt==5.5.1
 coverage==7.10.6
+drf-yasg==1.21.10
