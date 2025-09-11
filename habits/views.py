@@ -1,8 +1,13 @@
+from django.shortcuts import get_object_or_404
+from django_celery_beat.utils import now_localtime
+from rest_framework.decorators import action
 from rest_framework.generics import (CreateAPIView, DestroyAPIView,
                                      ListAPIView, RetrieveAPIView,
                                      UpdateAPIView)
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
+from tasks import send_inform_habit
 
 from habits.models import Habit
 from habits.paginations import CustomPagination
@@ -16,6 +21,14 @@ class UserHabitViewSet(ModelViewSet):
     queryset = Habit.objects.filter(sign_of_publicity=True)
     serializer_class = HabitSerializer
     pagination_class = CustomPagination
+
+    @action(methods=["get"], detail=True)
+    def time_lead(self, request, pk=None):
+        habit = get_object_or_404(Habit, pk=pk)
+        if habit.time_lead.filter(pk=request.user.pk) == now_localtime:
+            send_inform_habit.delay(habit.user.email)
+        serializer = self.get_serializer(habit)
+        return Response(data=serializer.data)
 
 
 class HabitCreateApiView(CreateAPIView):
@@ -36,6 +49,11 @@ class HabitListApiView(ListAPIView):
     serializer_class = HabitSerializer
     permission_classes = (IsAuthenticated, IsOwner)
     pagination_class = CustomPagination
+
+    def get(self, request):
+        habits = Habit.objects.filter(user=request.user)
+        serializer = HabitSerializer(habits, many=True)
+        return Response(serializer.data)
 
 
 class HabitRetrieveView(RetrieveAPIView):
