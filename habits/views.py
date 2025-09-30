@@ -7,11 +7,11 @@ from rest_framework.generics import (CreateAPIView, DestroyAPIView,
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
-from tasks import send_inform_habit
 
 from habits.models import Habit
 from habits.paginations import CustomPagination
 from habits.serializers import HabitSerializer
+from habits.tasks import send_inform_habit
 from users.permissions import IsOwner
 
 

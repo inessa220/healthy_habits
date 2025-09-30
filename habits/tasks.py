@@ -1,6 +1,6 @@
-from celery import shared_task
 from django_celery_beat.utils import now_localtime
 
+from config.celery import shared_task
 from habits.models import Habit
 from habits.services import send_telegram_message
 from users.models import User
