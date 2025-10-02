@@ -1,9 +1,13 @@
 from django.shortcuts import get_object_or_404
 from django_celery_beat.utils import now_localtime
 from rest_framework.decorators import action
-from rest_framework.generics import (CreateAPIView, DestroyAPIView,
-                                     ListAPIView, RetrieveAPIView,
-                                     UpdateAPIView)
+from rest_framework.generics import (
+    CreateAPIView,
+    DestroyAPIView,
+    ListAPIView,
+    RetrieveAPIView,
+    UpdateAPIView,
+)
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
